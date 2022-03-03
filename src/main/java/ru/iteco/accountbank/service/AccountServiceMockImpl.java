@@ -9,4 +9,9 @@ public class AccountServiceMockImpl implements AccountService {
     public AccountInfo getAccountInfoById(Integer id) {
         return new AccountInfo();
     }
+
+    @Override
+    public String getPersonalInfoClass() {
+        return null;
+    }
 }

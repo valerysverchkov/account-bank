@@ -2,6 +2,7 @@ package ru.iteco.accountbank.service;
 
 import java.util.List;
 import java.util.Map;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 import ru.iteco.accountbank.model.AccountInfo;
@@ -15,7 +16,7 @@ public class AccountServiceImpl implements AccountService {
     private final PersonalInformationService personalInformationService;
     private final Map<String, BankBookService> bankBookServices;
 
-    public AccountServiceImpl(PersonalInformationService personalInformationService,
+    public AccountServiceImpl(@Lazy PersonalInformationService personalInformationService,
                               Map<String, BankBookService> bankBookServices) {
         this.personalInformationService = personalInformationService;
         this.bankBookServices = bankBookServices;
@@ -36,6 +37,10 @@ public class AccountServiceImpl implements AccountService {
             }
         }
         return accountInfo;
+    }
+
+    public String getPersonalInfoClass() {
+        return personalInformationService.getClass().toString();
     }
 
 }
