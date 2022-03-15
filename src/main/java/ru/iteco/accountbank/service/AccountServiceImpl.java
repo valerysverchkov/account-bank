@@ -2,6 +2,7 @@ package ru.iteco.accountbank.service;
 
 import java.util.List;
 import java.util.Map;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import ru.iteco.accountbank.model.AccountInfo;
 import ru.iteco.accountbank.model.BankBook;
 import ru.iteco.accountbank.model.PersonalInfo;
 
+@Slf4j
 @Service
 @Primary
 public class AccountServiceImpl implements AccountService {
@@ -27,11 +29,11 @@ public class AccountServiceImpl implements AccountService {
         AccountInfo accountInfo = new AccountInfo();
         PersonalInfo personalInfo = personalInformationService.getPersonalInfoById(id);
         accountInfo.setPersonalInfo(personalInfo);
-        System.out.println(bankBookServices);
+        log.info("BankBook services: {}", bankBookServices);
         for (Map.Entry<String, BankBookService> bankBookServiceEntry : bankBookServices.entrySet()) {
             BankBookService bankBookService = bankBookServiceEntry.getValue();
             List<BankBook> bankBooks = bankBookService.getBankBooksById(id);
-            System.out.println(bankBooks);
+            log.info("Bank books: {}", bankBooks);
             if (!bankBooks.isEmpty()) {
                 accountInfo.setBankBooks(bankBooks);
             }
