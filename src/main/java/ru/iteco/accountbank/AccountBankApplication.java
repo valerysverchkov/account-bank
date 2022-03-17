@@ -7,6 +7,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import ru.iteco.accountbank.model.AccountInfo;
+import ru.iteco.accountbank.model.User;
 import ru.iteco.accountbank.repository.ExternalRepository;
 import ru.iteco.accountbank.service.AccountService;
 import ru.iteco.accountbank.service.ExternalService;
@@ -24,7 +25,11 @@ public class AccountBankApplication {
 
         ExternalRepository externalRepository = applicationContext.getBean(ExternalRepository.class);
 
-        log.info("Result external repository: {}", externalRepository.getInfo());
+        User user = User.builder().id(1).name("name").build();
+
+        String info = externalRepository.getInfo(user);
+        log.info("Result external repository: {}", info);
+        externalRepository.saveInfo(null);
 
         homeworkOne(applicationContext);
     }

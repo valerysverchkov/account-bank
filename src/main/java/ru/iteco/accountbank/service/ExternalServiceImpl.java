@@ -27,6 +27,11 @@ public class ExternalServiceImpl implements ExternalService {
         return externalInfoMap.get(id);
     }
 
+    @Override
+    public void saveExternalInfo(ExternalInfo externalInfo) {
+        externalInfoMap.put(externalInfo.getId(), externalInfo);
+    }
+
     @PostConstruct
     public void init() {
         externalInfoMap.put(1, new ExternalInfo(1, "hasInfo"));
