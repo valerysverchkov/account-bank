@@ -23,13 +23,13 @@ public class AccountBankApplication {
     public static void main(String[] args) {
         AnnotationConfigApplicationContext applicationContext = new AnnotationConfigApplicationContext(AccountBankApplication.class);
 
-        ExternalRepository externalRepository = applicationContext.getBean(ExternalRepository.class);
-
-        User user = User.builder().id(1).name("name").build();
-
-        String info = externalRepository.getInfo(user);
-        log.info("Result external repository: {}", info);
-        externalRepository.saveInfo(null);
+//        ExternalRepository externalRepository = applicationContext.getBean(ExternalRepository.class);
+//
+//        User user = User.builder().id(1).name("name").build();
+//
+//        String info = externalRepository.getInfo(user);
+//        log.info("Result external repository: {}", info);
+//        externalRepository.saveInfo(null);
 
         homeworkOne(applicationContext);
     }
@@ -41,6 +41,7 @@ public class AccountBankApplication {
         flow.run(2);
         flow.run(3);
         flow.run(4);
+        flow.run(6);
         applicationContext.close();
     }
 

@@ -16,7 +16,6 @@ import org.springframework.util.SerializationUtils;
 import ru.iteco.accountbank.model.annotation.EncryptResult;
 
 @Slf4j
-@Component
 public class EncryptResultBeanPostProcessor implements BeanPostProcessor {
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {

@@ -8,7 +8,6 @@ import org.springframework.beans.factory.config.ConfigurableListableBeanFactory;
 import org.springframework.stereotype.Component;
 
 @Slf4j
-@Component
 public class PrintBeanFactoryPostProcessor implements BeanFactoryPostProcessor {
 
     @Override

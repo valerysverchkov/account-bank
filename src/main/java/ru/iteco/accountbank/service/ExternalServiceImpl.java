@@ -24,7 +24,11 @@ public class ExternalServiceImpl implements ExternalService {
 
     @CacheResult
     public ExternalInfo getExternalInfo(Integer id) {
-        return externalInfoMap.get(id);
+        ExternalInfo externalInfo = externalInfoMap.get(id);
+        if (externalInfo == null) {
+            throw new RuntimeException("External info with id: " + id + " not found");
+        }
+        return externalInfo;
     }
 
     @Override

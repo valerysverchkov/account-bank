@@ -8,7 +8,6 @@ import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.stereotype.Component;
 import ru.iteco.accountbank.model.annotation.CacheResult;
 
-@Component
 @Slf4j
 public class CacheResultBeanPostProcessor implements BeanPostProcessor {
 
