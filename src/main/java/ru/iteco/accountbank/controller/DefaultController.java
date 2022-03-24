@@ -2,7 +2,8 @@ package ru.iteco.accountbank.controller;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import ru.iteco.accountbank.service.external.ExternalService;
+import ru.iteco.accountbank.model.ExternalInfo;
+import ru.iteco.accountbank.service.ExternalService;
 
 @RestController
 class DefaultController {
@@ -14,7 +15,7 @@ class DefaultController {
     }
 
     @GetMapping("/info")
-    String getInfo() {
+    ExternalInfo getInfo() {
         return externalService.getInfo();
     }
 
