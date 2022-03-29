@@ -1,7 +1,9 @@
 package ru.iteco.accountbank.controller;
 
 import java.util.List;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,8 +32,13 @@ public class UserRestController {
     }
 
     @GetMapping("/{id}")
-    public UserDto getUserById(@PathVariable Integer id) {
-        return userService.getById(id);
+    public ResponseEntity<UserDto> getUserById(@PathVariable Integer id) {
+        UserDto userDto = userService.getById(id);
+        ResponseCookie userId = ResponseCookie.from("userId", userDto.getId().toString()).maxAge(600).secure(true).build();
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .header(HttpHeaders.SET_COOKIE, userId.toString())
+                .body(userDto);
     }
 
     @PostMapping
