@@ -21,4 +21,6 @@ public class UserDto {
     @Email
     private String email;
 
+    private AddressDto address;
+
 }
