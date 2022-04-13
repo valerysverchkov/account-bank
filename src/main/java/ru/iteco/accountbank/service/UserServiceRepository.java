@@ -38,6 +38,8 @@ public class UserServiceRepository implements UserService {
         log.info("User from repo: {}", userEntity);
         AddressEntity address = userEntity.getAddress();
         log.info("User from address: {}", address.getUser());
+
+        log.info("Group from user: {}", userEntity.getGroups());
         return mapToDto(userEntity);
     }
 
