@@ -39,7 +39,7 @@ public class BankBookEntity {
     private BigDecimal amount;
 
     @ManyToOne
-    @JoinColumn(name = "currency")
+    @JoinColumn(name = "currency_id")
     private CurrencyEntity currency;
 
     @ToString.Exclude

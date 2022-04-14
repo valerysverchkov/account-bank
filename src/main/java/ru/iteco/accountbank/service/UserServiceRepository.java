@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 import ru.iteco.accountbank.model.AddressDto;
 import ru.iteco.accountbank.model.UserDto;
 import ru.iteco.accountbank.model.entity.AddressEntity;
@@ -26,6 +27,7 @@ public class UserServiceRepository implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<UserDto> getAll() {
         return userRepository.findAll().stream()
                 .map(this::mapToDto)
@@ -33,20 +35,24 @@ public class UserServiceRepository implements UserService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public UserDto getById(Integer id) {
         UserEntity userEntity = userRepository.getById(id);
         log.info("User from repo: {}", userEntity);
         AddressEntity address = userEntity.getAddress();
         log.info("User from address: {}", address.getUser());
-
         log.info("Group from user: {}", userEntity.getGroups());
+        userEntity = userRepository.getById(id);
         return mapToDto(userEntity);
     }
 
     @Override
     public UserDto create(UserDto userDto) {
         UserEntity userEntity = mapToEntity(userDto);
-        return mapToDto(userRepository.save(userEntity));
+        log.info("User entity before save: {}", userEntity);
+        userEntity = userRepository.saveAndFlush(userEntity);
+        log.info("User entity after save: {}", userEntity);
+        return mapToDto(userEntity);
     }
 
     @Override
@@ -66,8 +72,12 @@ public class UserServiceRepository implements UserService {
     }
 
     @Override
+    @Transactional
     public void delete(Integer id) {
-        userRepository.deleteById(id);
+        UserEntity userEntity = userRepository.findById(id).orElseThrow(() -> new RuntimeException("User not found"));
+        log.info("User entity before delete: {}", userEntity);
+        userRepository.delete(userEntity);
+        log.info("User entity after delete: {}", userEntity);
     }
 
     private UserDto mapToDto(UserEntity userEntity) {
