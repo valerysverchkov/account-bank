@@ -4,8 +4,6 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                             http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
-    <includeAll path="db/changelog/init"/>
-
     <changeSet id="init-ad-schema" author="iteco">
         <sql>
             create schema ad;
@@ -138,6 +136,51 @@
             </column>
         </createTable>
         <addPrimaryKey schemaName="ad" tableName="users_groups" columnNames="user_id, group_id"/>
+    </changeSet>
+
+    <changeSet id="create-sequence-dict-status" author="iteco">
+        <createSequence sequenceName="status_id_seq" schemaName="dict"/>
+    </changeSet>
+
+    <changeSet id="create-table-dict-status" author="iteco">
+        <createTable tableName="status" schemaName="dict">
+            <column name="id" type="integer" defaultValueComputed="nextval('dict.status_id_seq')">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="name" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-sequence-transaction" author="iteco">
+        <createSequence sequenceName="transaction_id_seq" schemaName="bank"/>
+    </changeSet>
+
+    <changeSet id="create-create-bank-transaction" author="iteco">
+        <createTable tableName="transaction" schemaName="bank">
+            <column name="id" type="integer" defaultValueComputed="nextval('bank.transaction_id_seq')">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="source_bank_book_id" type="integer">
+                <constraints nullable="false" foreignKeyName="transaction_source_bank_book_fkey" references="bank.bank_book(id)"/>
+            </column>
+            <column name="target_bank_book_id" type="integer">
+                <constraints nullable="false" foreignKeyName="transaction_target_bank_book_fkey" references="bank.bank_book(id)"/>
+            </column>
+            <column name="amount" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+            <column name="initiation_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="completion_date" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="status_id" type="integer">
+                <constraints nullable="false" foreignKeyName="transaction_status_fkey" references="dict.status(id)"/>
+            </column>
+        </createTable>
     </changeSet>
 
 </databaseChangeLog>

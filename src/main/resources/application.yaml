@@ -11,3 +11,21 @@ spring:
     password: account
   jpa:
     show-sql: true
+
+service:
+  exchange:
+    token: 44b48c61421c07b0c9adfb9deddbde21
+    url:
+      all-exchange: http://data.fixer.io/api/latest?access_key=%s
+
+
+#logging:
+#  level:
+#    org.springframework: error
+#  pattern:
+#    console: "%black(%d{ISO8601}) %highlight(%-5level) [%blue(%t)] %yellow(%C{1.}): %msg%n%throwable"
+#  file:
+#    path: log
+#  logback:
+#    rollingpolicy:
+#      clean-history-on-start: true
