@@ -183,4 +183,48 @@
         </createTable>
     </changeSet>
 
+    <changeSet id="create-user-auth-sequence" author="iteco">
+        <createSequence sequenceName="user_auth_id_seq" schemaName="ad"/>
+    </changeSet>
+
+    <changeSet id="crate-user-auth-table" author="iteco">
+        <createTable tableName="user_auth" schemaName="ad">
+            <column name="id" type="integer" defaultValueComputed="nextval('ad.user_auth_id_seq')">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="username" type="varchar">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="password" type="varchar">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-role-id-seq" author="iteco">
+        <createSequence sequenceName="role_id_seq" schemaName="ad"/>
+    </changeSet>
+
+    <changeSet id="create-role-table" author="iteco">
+        <createTable tableName="role" schemaName="ad">
+            <column name="id" type="integer" defaultValueComputed="nextval('ad.role_id_seq')">
+                <constraints primaryKey="true" nullable="false" unique="true"/>
+            </column>
+            <column name="name" type="varchar">
+                <constraints nullable="false" unique="true"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="create-user-auth-roles-table" author="iteco">
+        <createTable tableName="user_auth_roles">
+            <column name="user_auth_id" type="integer">
+                <constraints nullable="false" foreignKeyName="user_auth_id_fkey" references="ad.user_auth(id)"/>
+            </column>
+            <column name="role_id" type="integer">
+                <constraints nullable="false" foreignKeyName="role_id_fkey" references="ad.role(id)"/>
+            </column>
+        </createTable>
+    </changeSet>
+
 </databaseChangeLog>
