@@ -12,6 +12,11 @@ spring:
   jpa:
     show-sql: true
 
+security:
+  jwt:
+    secret: c2VjcmV0
+    expiration: 600
+
 service:
   exchange:
     token: 44b48c61421c07b0c9adfb9deddbde21
